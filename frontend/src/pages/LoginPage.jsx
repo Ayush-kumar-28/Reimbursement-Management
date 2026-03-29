@@ -9,6 +9,7 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const successMsg = location.state?.message;
 
   const handleSubmit = async (e) => {
@@ -43,8 +44,15 @@ export default function LoginPage() {
           </div>
           <div className="form-group">
             <label className="form-label">Password</label>
-            <input className="form-input" type="password" placeholder="••••••••" required
-              value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+            <div style={{ position: 'relative' }}>
+              <input className="form-input" type={showPassword ? 'text' : 'password'} placeholder="••••••••" required
+                value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })}
+                style={{ paddingRight: '2.5rem' }} />
+              <button type="button" onClick={() => setShowPassword(!showPassword)}
+                style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem', color: '#9ca3af' }}>
+                {showPassword ? '🙈' : '👁️'}
+              </button>
+            </div>
           </div>
           <div style={{ textAlign: 'right', marginBottom: '1.25rem', marginTop: '-0.5rem' }}>
             <Link to="/forgot-password" style={{ fontSize: '0.82rem', color: '#6366f1' }}>Forgot password?</Link>

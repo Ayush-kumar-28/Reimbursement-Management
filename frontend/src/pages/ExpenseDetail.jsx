@@ -69,7 +69,7 @@ export default function ExpenseDetail() {
           )}
           {expense.receiptUrl && (
             <div style={{ marginTop: '0.75rem' }}>
-              <a href={`/${expense.receiptUrl}`} target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm">
+              <a href={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/${expense.receiptUrl}`} target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm">
                 📎 View Receipt
               </a>
             </div>

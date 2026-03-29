@@ -10,6 +10,7 @@ export default function SignupPage() {
   const [countries, setCountries] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     axios.get('https://restcountries.com/v3.1/all?fields=name,currencies')
@@ -61,8 +62,15 @@ export default function SignupPage() {
             value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
 
           <label style={styles.label}>Password *</label>
-          <input style={styles.input} type="password" placeholder="Set a password" required
-            value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+          <div style={{ position: 'relative', marginBottom: '1rem' }}>
+            <input style={{ ...styles.input, marginBottom: 0, paddingRight: '2.5rem' }}
+              type={showPassword ? 'text' : 'password'} placeholder="Set a password" required
+              value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+            <button type="button" onClick={() => setShowPassword(!showPassword)}
+              style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem', color: '#9ca3af' }}>
+              {showPassword ? '🙈' : '👁️'}
+            </button>
+          </div>
 
           <label style={styles.label}>Company Name *</label>
           <input style={styles.input} placeholder="Acme Corp" required

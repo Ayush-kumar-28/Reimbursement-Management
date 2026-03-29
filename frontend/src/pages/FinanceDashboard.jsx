@@ -14,6 +14,13 @@ export default function FinanceDashboard() {
   useEffect(() => {
     if (!user) return;
     api.get('/expenses').then((res) => setExpenses(res.data));
+
+    // Auto-poll every 10 seconds
+    const interval = setInterval(() => {
+      api.get('/expenses').then((res) => setExpenses(res.data));
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, [user]);
 
   const handleAction = async (id, action) => {

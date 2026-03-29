@@ -9,6 +9,7 @@ export default function ResetPassword() {
   const [confirm, setConfirm] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault(); setError('');
@@ -35,13 +36,21 @@ export default function ResetPassword() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="form-label">New Password</label>
-            <input className="form-input" type="password" placeholder="Min 6 characters" required
-              value={password} onChange={(e) => setPassword(e.target.value)} />
+            <div style={{ position: 'relative' }}>
+              <input className="form-input" type={showPassword ? 'text' : 'password'} placeholder="Min 6 characters" required
+                value={password} onChange={(e) => setPassword(e.target.value)} style={{ paddingRight: '2.5rem' }} />
+              <button type="button" onClick={() => setShowPassword(!showPassword)}
+                style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem', color: '#9ca3af' }}>
+                {showPassword ? '🙈' : '👁️'}
+              </button>
+            </div>
           </div>
           <div className="form-group">
             <label className="form-label">Confirm Password</label>
-            <input className="form-input" type="password" placeholder="Repeat password" required
-              value={confirm} onChange={(e) => setConfirm(e.target.value)} />
+            <div style={{ position: 'relative' }}>
+              <input className="form-input" type={showPassword ? 'text' : 'password'} placeholder="Repeat password" required
+                value={confirm} onChange={(e) => setConfirm(e.target.value)} style={{ paddingRight: '2.5rem' }} />
+            </div>
           </div>
           <button className="btn btn-primary btn-lg" type="submit" disabled={loading}>
             {loading ? 'Resetting...' : 'Reset Password'}

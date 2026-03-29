@@ -123,9 +123,11 @@ export default function AdminDashboard() {
             {/* Quick stats in header */}
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               {[
-                { label: 'Users', value: users.length, icon: '👥' },
+                { label: 'Employees', value: users.filter(u => u.role === 'Employee').length, icon: '👤' },
+                { label: 'Managers', value: users.filter(u => u.role === 'Manager').length, icon: '👔' },
+                { label: 'Finance', value: users.filter(u => u.role === 'Finance').length, icon: '💼' },
+                { label: 'Directors', value: users.filter(u => u.role === 'Director').length, icon: '🎯' },
                 { label: 'Pending', value: expenses.filter(e => e.status === 'Pending').length, icon: '⏳' },
-                { label: 'Approved', value: expenses.filter(e => e.status === 'Approved').length, icon: '✅' },
               ].map((s) => (
                 <div key={s.label} style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(8px)', borderRadius: 12, padding: '0.75rem 1.25rem', border: '1px solid rgba(255,255,255,0.15)', textAlign: 'center', minWidth: 80 }}>
                   <div style={{ fontSize: '1.1rem', marginBottom: '0.1rem' }}>{s.icon}</div>
@@ -142,12 +144,14 @@ export default function AdminDashboard() {
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '1.5rem' }}>
 
         {/* Stats Row */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem', marginTop: '-1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '1rem', marginBottom: '1.5rem', marginTop: '-1.5rem' }}>
           {[
-            { label: 'Total Employees', value: users.filter(u => u.role === 'Employee').length, color: '#6366f1', icon: '👤' },
-            { label: 'Total Managers', value: users.filter(u => ['Manager','Finance','Director'].includes(u.role)).length, color: '#0ea5e9', icon: '👔' },
+            { label: 'Employees', value: users.filter(u => u.role === 'Employee').length, color: '#6366f1', icon: '👤' },
+            { label: 'Managers', value: users.filter(u => u.role === 'Manager').length, color: '#0ea5e9', icon: '👔' },
+            { label: 'Finance', value: users.filter(u => u.role === 'Finance').length, color: '#f59e0b', icon: '💼' },
+            { label: 'Directors', value: users.filter(u => u.role === 'Director').length, color: '#8b5cf6', icon: '🎯' },
             { label: 'Total Reimbursed', value: `${company?.defaultCurrency || ''} ${totalReimbursed.toFixed(0)}`, color: '#10b981', icon: '💰' },
-            { label: 'Active Rules', value: rules.length, color: '#8b5cf6', icon: '⚙️' },
+            { label: 'Active Rules', value: rules.length, color: '#ef4444', icon: '⚙️' },
           ].map((s) => (
             <div key={s.label} style={{ background: '#fff', borderRadius: 12, padding: '1.25rem', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', border: '1px solid #f3f4f6', display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <div style={{ width: 48, height: 48, borderRadius: 12, background: `${s.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', flexShrink: 0 }}>{s.icon}</div>
