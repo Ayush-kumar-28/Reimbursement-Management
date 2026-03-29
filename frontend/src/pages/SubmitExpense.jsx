@@ -243,18 +243,39 @@ export default function SubmitExpense() {
         <div style={s.titleRow}>
           <h2 style={{ margin: 0 }}>Submit Expense</h2>
           <div style={s.scanArea}>
-            <input type="file" accept=".jpg,.jpeg,.png,.pdf" id="receiptFile" style={{ display: 'none' }}
-              onChange={e => { setReceipt(e.target.files[0]); setScanned(false); }} />
-            <label htmlFor="receiptFile" style={s.btnUpload}>
+            {/* Hidden file input */}
+            <input
+              type="file"
+              accept=".jpg,.jpeg,.png,.pdf"
+              id="receiptFile"
+              style={{ display: 'none' }}
+              onChange={e => {
+                const file = e.target.files[0];
+                if (file) { setReceipt(file); setScanned(false); }
+              }}
+            />
+            {/* Attach button triggers hidden input */}
+            <button
+              type="button"
+              style={s.btnUpload}
+              onClick={() => document.getElementById('receiptFile').click()}
+            >
               📎 {receipt ? receipt.name.substring(0, 18) + (receipt.name.length > 18 ? '...' : '') : 'Attach Receipt'}
-            </label>
+            </button>
             <button type="button" style={{ ...s.btnUpload, background: '#f0fdf4', border: '1px solid #86efac', color: '#166534' }} onClick={openCamera}>
               📷 Camera
             </button>
-            <button type="button" style={{ ...s.btnScan, opacity: (!receipt || scanning) ? 0.6 : 1 }}
-              onClick={handleScan} disabled={!receipt || scanning}>
+            <button
+              type="button"
+              style={{ ...s.btnScan, opacity: (!receipt || scanning) ? 0.6 : 1, cursor: (!receipt || scanning) ? 'not-allowed' : 'pointer' }}
+              onClick={handleScan}
+              disabled={!receipt || scanning}
+            >
               {scanning ? '⏳ Scanning...' : '🔍 Scan & Auto-fill'}
             </button>
+            {receipt && !scanned && !scanning && (
+              <span style={{ fontSize: '0.78rem', color: '#6b7280' }}>✓ {receipt.name.substring(0, 15)}</span>
+            )}
             {scanned && <span style={s.badge}>✓ Auto-filled</span>}
           </div>
         </div>
